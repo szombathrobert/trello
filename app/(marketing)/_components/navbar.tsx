@@ -14,7 +14,7 @@ export const Navbar = () => {
                         </Link>
                     </Button>
                     <Button size="sm" asChild>
-                        <Link href="/sign-un">
+                        <Link href="/sign-up">
                             Regisztráció
                         </Link>
                     </Button>
