@@ -10,11 +10,13 @@ export const UpdateCard = z.object({
             message: "A leírás mező túl rövid.",
         }),
     ),
-    title: z.string({
+    title: z.optional(
+        z.string({
         required_error: "A cím kötelező!",
         invalid_type_error: "A cím kötelező!"
     }).min(3, {
         message: "A cím túl rövid!"
-    }),
+    })
+    ),
     id: z.string(),
 })
