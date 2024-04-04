@@ -28,6 +28,10 @@ export const Header = ({
                 queryKey: ["card", data.id]
             });
 
+            queryClient.invalidateQueries({
+                queryKey: ["card-logs", data.id]
+            });
+
             toast.success(`Átnevezve "${data.title}"-ra/re.`);
             setTitle(data.title);
         },

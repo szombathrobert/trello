@@ -89,7 +89,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
         />
         <div className="flex items-center gap-x-1">
           <FormSubmit>
-            Add card
+            Kártya hozzáadása
           </FormSubmit>
           <Button onClick={disableEditing} size="sm" variant="ghost">
             <X className="h-5 w-5" />
