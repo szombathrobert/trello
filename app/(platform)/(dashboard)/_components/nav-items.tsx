@@ -48,6 +48,22 @@ export const NavItem = ({
       href: `/organization/${organization.id}`,
     },
     {
+      label: "⭕ Kapszula Esetek",
+      href: `/board/4ca42ee4-faeb-4b94-9fb9-3835ffb65eb1`,
+    },
+    {
+      label: "⭕ Rosszindulatú Daganatos Esetek",
+      href: `/board/5b13f57a-d87f-419d-a5fb-7275aa6c5a5a`,
+    },
+    {
+      label: "⭕ Bp Szövettanok",
+      href: `/board/3c0066f0-87f5-49a2-94f1-74f7d0180c2a`,
+    },
+    {
+      label: "⭕ Receptek",
+      href: `/board/5ece3888-4cd1-4b1d-a374-43efe3f22a3d`,
+    },
+    {
       label: "Aktivitás",
       icon: <Activity className="h-4 w-4 mr-2" />,
       href: `/organization/${organization.id}/activity`,
@@ -56,11 +72,6 @@ export const NavItem = ({
       label: "Beállítások",
       icon: <Settings className="h-4 w-4 mr-2" />,
       href: `/organization/${organization.id}/settings`,
-    },
-    {
-      label: "Számlázás",
-      icon: <CreditCard className="h-4 w-4 mr-2" />,
-      href: `/organization/${organization.id}/billing`,
     },
   ];
 

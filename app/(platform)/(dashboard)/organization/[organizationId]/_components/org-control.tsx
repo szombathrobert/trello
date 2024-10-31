@@ -12,9 +12,10 @@ export const OrgControl = () => {
         if (!setActive) return;
 
         setActive({
-            organization: params.organizationId as string,
+            organization: params?.organizationId as string,
         })
-    }, [setActive, params.OrganizationId]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [setActive]);
 
     return null;
 }

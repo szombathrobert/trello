@@ -62,7 +62,12 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
     const listId = formData.get("listId") as string;
-    const boardId = params.boardId as string;
+    const boardId = params?.boardId as string;
+
+    if (!boardId) {
+      toast.error("A boardId nem elérhető!");
+      return;
+    }
 
     execute({ title, listId, boardId });
   };

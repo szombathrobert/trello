@@ -41,7 +41,7 @@ export const BoardOptions = ({ id }: BoardOptionsProps) => {
             align="start"
           >
             <div className="text-sm font-medium text-center text-neutral-600 pb-4">
-              Board actions
+              Tábla Műveletek!
             </div>
             <PopoverClose asChild>
               <Button 
@@ -57,7 +57,7 @@ export const BoardOptions = ({ id }: BoardOptionsProps) => {
               disabled={isLoading}
               className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
             >
-              Delete this board
+              Tábla törlése...
             </Button>
           </PopoverContent>
         </Popover>

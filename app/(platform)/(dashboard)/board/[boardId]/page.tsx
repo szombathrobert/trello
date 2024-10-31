@@ -19,7 +19,7 @@ const BoardIdPage = async ({
     
     const lists = await db.list.findMany({
         where: {
-            boardId: params.boardId,
+            boardId: params?.boardId,
             board: {
                 orgId,
             },
@@ -39,7 +39,7 @@ const BoardIdPage = async ({
     return (
         <div className="p-4 h-full overflow-x-auto">
             <ListContainer 
-                boardId={params.boardId}
+                boardId={params?.boardId}
                 data={lists}
             />
         </div>

@@ -1,7 +1,7 @@
+// hooks/use-action.ts
 import { useState, useCallback } from "react";
 
 import { ActionState, FieldErrors } from "@/lib/create-safe-action";
-
 
 type Action<TInput, TOutput> = (data: TInput) => Promise<ActionState<TInput, TOutput>>;
 
@@ -44,19 +44,23 @@ export const useAction = <TInput, TOutput> (
               setData(result.data);
               options.onSuccess?.(result.data);
             }
+          } catch (err: any) {
+            const errorMessage = (err instanceof Error) ? err.message : 'Unknown error';
+            setError(errorMessage);
+            options.onError?.(errorMessage);
           } finally {
             setIsLoading(false);
             options.onComplete?.();
           }
         },
         [action, options]
-        );
+    );
 
-        return {
-          execute,
-          fieldErrors,
-          error,
-          data,
-          isLoading,
-        };
-      };
+    return {
+      execute,
+      fieldErrors,
+      error,
+      data,
+      isLoading,
+    };
+};

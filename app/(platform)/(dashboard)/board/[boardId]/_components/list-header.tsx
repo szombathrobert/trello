@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, ElementRef } from "react";
+import { useState, useRef, ElementRef, useEffect } from "react";
 import { List } from "@prisma/client";
 import { useEventListener } from "usehooks-ts";
 import { FormInput } from "@/components/form/form-input";
@@ -11,18 +11,30 @@ import { ListOptions } from "./list-options";
 
 interface ListHeaderProps {
     data: List;
+    cardCount: number; // Új prop a lista elemek számának megadásához
     onAddCard: () => void;
 }
 
 export const ListHeader = ({
     data,
+    cardCount,
     onAddCard,
 }: ListHeaderProps) => {
-    const [title, setTitle] = useState(data.title)
+    const [title, setTitle] = useState(data.title);
     const [isEditing, setIsEditing] = useState(false);
+    const [label, setLabel] = useState<{ text: string, color: string } | null>(null);
 
-    const formRef = useRef<ElementRef<"form">>(null)
-    const inputRef = useRef<ElementRef<"input">>(null)
+    const formRef = useRef<ElementRef<"form">>(null);
+    const inputRef = useRef<ElementRef<"input">>(null);
+
+    useEffect(() => {
+        // Load label from localStorage
+        const storedLabel = localStorage.getItem(`label-${data.id}`);
+        const storedColor = localStorage.getItem(`labelColor-${data.id}`);
+        if (storedLabel && storedColor) {
+            setLabel({ text: storedLabel, color: storedColor });
+        }
+    }, [data.id]);
 
     const enableEditing = () => {
         setIsEditing(true);
@@ -40,10 +52,10 @@ export const ListHeader = ({
         onSuccess: (data) => {
             toast.success(`Átnevezve "${data.title}"-re`);
             setTitle(data.title);
-            disableEditing()
+            disableEditing();
         },
         onError: (error) => {
-            toast.error(error)
+            toast.error(error);
         }
     });
 
@@ -61,11 +73,11 @@ export const ListHeader = ({
             id,
             boardId,
         });
-    }
+    };
 
     const onBlur = () => {
         formRef.current?.requestSubmit();
-    }
+    };
 
     const onKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
@@ -75,41 +87,56 @@ export const ListHeader = ({
 
     useEventListener("keydown", onKeyDown);
 
+    const handleLabelChange = (newLabel: { text: string, color: string }) => {
+        setLabel(newLabel);
+        // Save label to localStorage
+        localStorage.setItem(`label-${data.id}`, newLabel.text);
+        localStorage.setItem(`labelColor-${data.id}`, newLabel.color);
+    };
+
     return (
-        <div className="pt-2 px-2 text-sm font-semibold flex 
-        justify-between items-start gap-x-2">
-            {isEditing ? (
-                <form 
-                    ref={formRef}
-                    action={handleSubmit}
-                    className="flex-1 px-[2px]">
-                    <input hidden id="id" name="id" value={data.id} />
-                    <input hidden id="boardId" name="boardId" value={data.boardId} />
-                    <FormInput 
-                        ref={inputRef}
-                        onBlur={onBlur}
-                        id="title"
-                        placeholder="Adj egy lsita címet..."
-                        defaultValue={title}
-                        className="text-sm px-[7px] py-1 h-7 font-medium border-transparent
-                        hover:border-input focus:border-input transition truncate
-                        bg-transparent focus:bg-white"
-                    />
-                    <button type="submit" hidden />
-                </form>
-            ) : (
-                <div 
-                    onClick={enableEditing}
-                    className="w-full text-sm px-2.5 py-1 
-                        h-7 font-medium border-transparent"
+        <div className="pt-2 px-2 text-sm font-semibold flex flex-col gap-2">
+            <div className="flex justify-between items-center">
+                {isEditing ? (
+                    <form 
+                        ref={formRef}
+                        action={handleSubmit}
+                        className="flex-1 px-[2px]"
+                    >
+                        <input hidden id="id" name="id" value={data.id} />
+                        <input hidden id="boardId" name="boardId" value={data.boardId} />
+                        <FormInput 
+                            ref={inputRef}
+                            onBlur={onBlur}
+                            id="title"
+                            placeholder="Adj egy lista címet..."
+                            defaultValue={title}
+                            className="text-sm px-[7px] py-1 h-7 font-medium border-transparent
+                            hover:border-input focus:border-input transition truncate
+                            bg-transparent focus:bg-white"
+                        />
+                        <button type="submit" hidden />
+                    </form>
+                ) : (
+                    <div 
+                        onClick={enableEditing}
+                        className="w-full text-sm px-2.5 py-1 
+                            h-7 font-medium border-transparent"
                     > 
-                    {title}
-                </div>
-            )}
-            <ListOptions 
-                onAddCard={onAddCard}
-                data={data}
-            />
+                        {title}
+                    </div>
+                )}
+                <ListOptions 
+                    onAddCard={onAddCard}
+                    data={data}
+                />
+            </div>
+            <hr />
+            <div className="text-center text-lg font-bold text-red-600">
+                {cardCount} elem
+            </div>
+            <hr />
         </div>
     );
 };
+

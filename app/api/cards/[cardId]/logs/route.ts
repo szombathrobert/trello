@@ -17,7 +17,7 @@ export async function GET(
         const auditLogs = await db.auditLog.findMany({
             where: {
                 orgId,
-                entityId: params.cardId,
+                entityId: params?.cardId,
                 entityType: ENTITY_TYPE.CARD,
             },
             orderBy: {

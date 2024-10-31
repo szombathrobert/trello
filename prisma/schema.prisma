@@ -50,6 +50,8 @@ model Card {
   title         String
   order         Int
   description   String? @db.String
+  label         String?
+  labelColor    String?
 
   listId        String
   list          List @relation(fields: [listId], references: [id], onDelete: Cascade)

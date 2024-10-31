@@ -104,7 +104,7 @@ export const ListOptions = ({
                     <input hidden name="boardId" id="boardId" value={data.boardId} />
                     <FormSubmit
                         variant="ghost"
-                        className="rounded-none w-full h-auot p-2 px-5 justify-start font-normal text-sm"
+                        className="rounded-none w-full h-auot p-2 px-5 justify-start font-normal text-sm text-rose-600"
                     >
                         Lista törlése...
                     </FormSubmit>

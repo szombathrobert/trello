@@ -6,7 +6,7 @@ export const UpdateCard = z.object({
         z.string({
             required_error: "A leírás mező kötelező!",
             invalid_type_error: "A leírás mező kötelező!",
-        }).min(3, {
+        }).min(0, {
             message: "A leírás mező túl rövid.",
         }),
     ),

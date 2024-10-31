@@ -10,7 +10,7 @@ import { updateListOrder } from "@/actions/update-list-order";
 import { updateCardOrder } from "@/actions/update-card-order";
 ;
 import { ListForm } from "./list-form";
-import { ListItem } from "./list-item";
+import { ListItem } from "./list-item"
 
 interface ListContainerProps {
     data: ListWithCards[];
@@ -40,6 +40,7 @@ export const ListContainer = ({
         },
     });
 
+
     const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
         onSuccess: () => {
             toast.success("Kártya átrendezve!")
@@ -52,6 +53,17 @@ export const ListContainer = ({
     useEffect(() => {
         setOrderedData(data);
     }, [data]);
+
+    
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          window.location.reload();
+        }, 5 * 60 * 1000); // refresh the page every 2 minutes
+    
+        return () => {
+          clearInterval(intervalId);
+        };
+      }, []);
 
     const onDragEnd = (result: any) => {
         const { destination, source, type } = result;
